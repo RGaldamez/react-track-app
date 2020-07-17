@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
 import Spacer from '../components/Spacer';
 import {Context as AuthContext} from '../context/AuthContext';
@@ -37,6 +37,12 @@ const SignupScreen = ({navigation}) => {
       <Spacer>
         <Button title="Sign Up" onPress={() => signup({email, password})} />
       </Spacer>
+      <View style={styles.redirect}>
+        <Text>Already have an account?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
+          <Text style={styles.signingRedirect}>Sign in Instead</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -58,6 +64,17 @@ const styles = StyleSheet.create({
     color: 'red',
     marginLeft: 10,
     marginBottom: 10,
+  },
+  signinHeader: {
+    marginLeft: 10,
+  },
+  signingRedirect: {
+    fontSize: 18,
+    color: 'blue',
+  },
+  redirect: {
+    flex: 1,
+    alignItems: 'center',
   },
 });
 

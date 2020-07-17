@@ -9,6 +9,9 @@ const authReducer = (state, action) => {
       return {...state, errorMessage: action.payload};
     case 'signup':
       return {token: action.payload, errorMessage: ''};
+    case 'signin':
+      return {token: action.payload, errorMessage: ''};
+
     default:
       return state;
   }
@@ -32,12 +35,21 @@ const signup = (dispatch) => async ({email, password}) => {
   }
 };
 
-const signin = (dispatch) => {
-  return ({email, password}) => {
-    //axios request to login
-    //change state to authorize use
-    //sign in fails, show error
-  };
+const signin = (dispatch) => async ({email, password}) => {
+  //axios request to login
+  //change state to authorize use
+  //sign in fails, show error
+  try {
+    const response = await trackerApi.post('/signin', {email, password});
+    await AsyncStorage.setItem('token', response.data.token);
+    dispatch({type: 'signin', payload: response.data.token});
+    navigate('TrackList');
+  } catch (error) {
+    dispatch({
+      type: 'add_error',
+      payload: 'Something when wrong with sign in',
+    });
+  }
 };
 
 const signout = (dispatch) => {
