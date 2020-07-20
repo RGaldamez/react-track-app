@@ -1,16 +1,18 @@
 import React, {useState, useContext} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
+import {NavigationEvents} from 'react-navigation';
 import Spacer from '../components/Spacer';
 import {Context as AuthContext} from '../context/AuthContext';
 
 const SignupScreen = ({navigation}) => {
-  const {state, signup} = useContext(AuthContext);
+  const {state, signup, clearErrorMessage} = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
     <View style={styles.container}>
+      <NavigationEvents onWillBlur={clearErrorMessage} />
       <Spacer>
         <Text h3>Sign Up for Tracker</Text>
       </Spacer>
